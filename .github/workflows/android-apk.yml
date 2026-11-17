@@ -21,11 +21,18 @@ jobs:
       - name: Siapkan folder web
         run: |
           mkdir -p www
-          cp index.html manifest.webmanifest sw.js www/
-          cp -r icons www/icons
+          cp index.html www/
+          for f in manifest.webmanifest sw.js; do
+            if [ -f "$f" ]; then cp "$f" www/; fi
+          done
 
       - name: Pasang Capacitor
-        run: npm install
+        run: |
+          npm init -y
+          npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
+          if [ ! -f capacitor.config.json ]; then
+            npx cap init "Ibu Cerdas" com.ibucerdas.app --web-dir www
+          fi
 
       - name: Buat proyek Android
         run: |
@@ -42,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ibu-cerdas-apk
-          path: android/app/build/outputs/apk/debug/app-debug.app
+          path: android/app/build/outputs/apk/debug/app-debug.apk
