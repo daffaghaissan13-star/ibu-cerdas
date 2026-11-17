@@ -1,0 +1,6 @@
+{
+  "appId": "com.ibucerdas.app",
+  "appName": "Ibu Cerdas",
+  "webDir": "www",
+  "server": { "androidScheme": "https" }
+}
